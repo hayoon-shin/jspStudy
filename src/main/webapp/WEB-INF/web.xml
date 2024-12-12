@@ -9,4 +9,54 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>myFirstServlet</display-name>
+    <servlet-name>myFirstServlet</servlet-name>
+    <servlet-class>com.kh.dev.sample.MyFirstServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>myFirstServlet</servlet-name>
+    <url-pattern>/myFirstServlet.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>lifeCycle</display-name>
+    <servlet-name>lifeCycle</servlet-name>
+    <servlet-class>com.kh.dev.sample.LifeCycle</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>lifeCycle</servlet-name>
+    <url-pattern>/lifeCycle.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>hello</display-name>
+    <servlet-name>hello</servlet-name>
+    <servlet-class>com.kh.dev.sample.Hello</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>hello</servlet-name>
+    <url-pattern>/hello.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>visitInsert</display-name>
+    <servlet-name>visitInsert</servlet-name>
+    <servlet-class>com.kh.bbs.VisitInsert</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>visitInsert</servlet-name>
+    <url-pattern>/visitInsert.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>visitList</display-name>
+    <servlet-name>visitList</servlet-name>
+    <servlet-class>com.kh.bbs.VisitList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>visitList</servlet-name>
+    <url-pattern>/visitList.do</url-pattern>
+  </servlet-mapping>
 </web-app>
