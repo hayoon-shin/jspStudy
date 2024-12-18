@@ -1,0 +1,42 @@
+@charset "UTF-8";
+/* zipTable 스타일 */
+.zipTable {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.zipTable th, .zipTable td {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.zipTable th {
+    background-color: #f4f4f4;
+    color: #333;
+    font-weight: bold;
+}
+
+.zipTable tr:nth-child(even) {
+    background-color: #f9f9f9; /* 짝수 행 배경색 */
+}
+
+.zipTable tr:hover {
+    background-color: #f1f1f1; /* 마우스 오버 시 배경색 */
+}
+
+/* 선택 버튼 스타일 */
+.select-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.select-button:hover {
+    background-color: #0056b3;
+}
