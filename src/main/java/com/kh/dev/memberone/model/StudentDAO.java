@@ -20,9 +20,10 @@ public class StudentDAO {
 	private final String SELECT_LOGIN_SQL = "SELECT PASS FROM STUDENT WHERE ID = ?";
 	private final String INSERT_SQL = "insert into student values(?,?,?,?,?,?,?,?,?,?)";
 	private final String DELETE_SQL = "DELETE FROM STUDENT WHERE ID = ?";
-	private final String UPDATE_SQL = "update student set pass=?,phone1=?,phone2=?,phone3=?,email=?,zipcode=?,address1=?,address2=?where id=?";
+	private final String UPDATE_SQL = "update student set pass=?, phone1=?, phone2=?, "
+			+ "phone3=?, email=?, zipcode=?, address1=?, address2=? where id=?";
 	private final String SELECT_ZIP_SQL = "select * from zipcode where dong like ?";
-	private ResultSet rs;
+
 	// 전체를 DB에서 출력
 	public ArrayList<StudentVO> selectDB() {
 		ConnectionPool cp = ConnectionPool.getInstance();
@@ -54,21 +55,18 @@ public class StudentDAO {
 		}
 		return tmList;
 	}
-
 	public StudentVO selectOneDB(StudentVO svo) {
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection con = cp.dbCon();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		StudentVO resultVO = null;
-
+		StudentVO resultVO = null; 
 		try {
-			pstmt = con.prepareStatement(SELECT_ONE_SQL); // 쿼리 준비
-			pstmt.setString(1, svo.getId()); // 쿼리에 ID 설정
-			rs = pstmt.executeQuery(); // 쿼리 실행
-
-			if (rs.next()) { // 결과가 존재하는 경우에만 처리
-				String id = rs.getString("ID");
+			pstmt = con.prepareStatement(SELECT_ONE_SQL);
+			pstmt.setString(1, svo.getId());
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				String id = rs.getString("id");
 				String pass = rs.getString("pass");
 				String name = rs.getString("name");
 				String phone1 = rs.getString("phone1");
@@ -76,17 +74,15 @@ public class StudentDAO {
 				String phone3 = rs.getString("phone3");
 				String email = rs.getString("email");
 				String zipcode = rs.getString("zipcode");
-				String address1 = rs.getString("address1");
-				String address2 = rs.getString("address2");
-
+				String address1 = rs.getString("Address1");
+				String address2 = rs.getString("Address2");
 				resultVO = new StudentVO(id, pass, name, phone1, phone2, phone3, email, zipcode, address1, address2);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace(); // 예외 출력
+			e.printStackTrace();
 		} finally {
-			cp.dbClose(con, pstmt, rs); // 리소스 정리
+			cp.dbClose(con, pstmt, rs);
 		}
-
 		return resultVO;
 	}
 
@@ -110,21 +106,23 @@ public class StudentDAO {
 		}
 		return (count != 0) ? true : false;
 	}
-
+	
 	public int selectLoginCheck(StudentVO svo) {
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection con = cp.dbCon();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String pass = null;
-		int check = -1; // id가 안맞음
+		int check = -1;  //id가 안맞음
 		try {
 			pstmt = con.prepareStatement(SELECT_LOGIN_SQL);
 			pstmt.setString(1, svo.getId());
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				pass = rs.getString("PASS");
-				check = (pass.equals(svo.getPass()) == true) ? (1) : (0);
+				check = (pass.equals(svo.getPass()) == true)?(1):(0); 
+			}else {
+				check = -1;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -168,7 +166,7 @@ public class StudentDAO {
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection con = cp.dbCon();
 		PreparedStatement pstmt = null;
-		int count = 0;
+		int count = 0; 
 		int rs = 0;
 		try {
 			pstmt = con.prepareStatement(INSERT_SQL);
@@ -181,21 +179,20 @@ public class StudentDAO {
 			pstmt.setString(7, svo.getEmail());
 			pstmt.setString(8, svo.getZipcode());
 			pstmt.setString(9, svo.getAddress1());
-			pstmt.setString(10, svo.getAddress2());
+			pstmt.setString(10,svo.getAddress2());
 			count = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
+		}finally {
 			cp.dbClose(con, pstmt);
 		}
 		return (count > 0) ? true : false;
 	}
-
 	public Boolean updateDB(StudentVO svo) {
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection con = cp.dbCon();
 		PreparedStatement pstmt = null;
-		int count = 0;
+		int count = 0; 
 		try {
 			pstmt = con.prepareStatement(UPDATE_SQL);
 			pstmt.setString(1, svo.getPass());
@@ -205,58 +202,31 @@ public class StudentDAO {
 			pstmt.setString(5, svo.getEmail());
 			pstmt.setString(6, svo.getZipcode());
 			pstmt.setString(7, svo.getAddress1());
-			pstmt.setString(8, svo.getAddress2());
+			pstmt.setString(8,svo.getAddress2());
 			pstmt.setString(9, svo.getId());
 			count = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
+		}finally {
 			cp.dbClose(con, pstmt);
 		}
 		return (count > 0) ? true : false;
 	}
-
-	public int deleteDB(String id, String pass) {
-		Connection con = null;
+	public Boolean deleteDB(StudentVO svo) {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection con = cp.dbCon();
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String dbPass = "";// 데이터베이스에 실제 저장된 패스워드
-		int result = -1;// 결과치
+		int count = 0; 
 		try {
-			pstmt = con.prepareStatement(SELECT_LOGIN_SQL);
-			pstmt.setString(1, id);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				dbPass = rs.getString("pass");
-				if (dbPass.equals(pass)) {// true - 본인 확인
-					pstmt = con.prepareStatement(DELETE_SQL);
-					pstmt.setString(1, id);
-					pstmt.executeUpdate();
-					result = 1;// 회원탈퇴 성공
-				} else { // 본인확인 실패 - 비밀번호 오류
-					result = 0;
-				}
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			if (rs != null)
-				try {
-					rs.close();
-				} catch (SQLException sqle1) {
-				}
-			if (pstmt != null)
-				try {
-					pstmt.close();
-				} catch (SQLException sqle2) {
-				}
-			if (con != null)
-				try {
-					con.close();
-				} catch (SQLException sqle3) {
-				}
+			pstmt = con.prepareStatement(DELETE_SQL);
+			pstmt.setString(1, svo.getId());
+			count = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			cp.dbClose(con, pstmt);
 		}
-		return result;
+		return (count > 0) ? true : false;
 	}
 
 }

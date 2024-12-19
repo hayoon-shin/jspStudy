@@ -1,21 +1,21 @@
-<%@page import="com.kh.dev.memberone.model.StudentDAO"%>
 <%@page import="com.kh.dev.memberone.model.StudentVO"%>
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<!-- ȸ���������� -->
-<!-- 2. curd -->
-<!-- 1. Ŭ���̾�Ʈ�� ������ ���������(request)�� �����´�, 
-�� �̿ܿ� ���������� �����´�. -->
+<%@page import="com.kh.dev.memberone.model.StudentDAO"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<!-- 회원정보수정  -->
+<!-- 1.클라이언트가 보내준 사용자정보(request)를 가져온다, 
+그 이외에 정보를 가져오는것 (세션,application, request)를 가져온다. -->
 <%
 String id = (String) session.getAttribute("id");
 String pass = (String) session.getAttribute("pass");
-
+%>
+<!-- 2.curd  -->
+<%
 StudentVO svo = new StudentVO();
 svo.setId(id);
 StudentDAO sdao = new StudentDAO();
 svo = sdao.selectOneDB(svo);
 %>
-
-<!-- 3. ȭ�鼳��(�ڹ��ڵ忡 �ؾߵǴµ� -> jsp service�Լ����� �����Ѵ�. -->
+<!-- 3.화면설계(자바코드에 해야되는데 - > jsp service함수에서 진행한다. -->
 <html>
 <head>
 <title>Update Form</title>
@@ -23,63 +23,63 @@ svo = sdao.selectOneDB(svo);
 <script language="javascript" src="script.js?timestamp=<%= System.currentTimeMillis() %>"></script>
 </head>
 <body>
+	<main>
 	<form name="regForm" method="post" action="modifyProc.jsp">
 		<table border="1">
 			<tr>
-				<td colspan="2" align="center">ȸ�� ���� ���� �Է�</td>
+				<td colspan="2" align="center">회원 수정 정보 입력</td>
 			</tr>
 			<tr>
-				<td align="right">���̵� :</td>
-				<td><%=svo.getId()%></td>
+				<td align="right">아이디 :</td>
+				<td><%= svo.getId()%></td>
 			</tr>
 			<tr>
-				<td align="right">�н����� :</td>
-				<td><input type="password" name="pass"
-					value="<%=svo.getPass()%>" /></td>
+				<td align="right">패스워드 :</td>
+				<td><input type="password" name="pass" value="<%=svo.getPass()%>"/></td>
 			</tr>
 			<tr>
-				<td align="right">�н����� Ȯ��:</td>
-				<td><input type="password" name="repass"
-					value="<%=svo.getPass()%>" /></td>
+				<td align="right">패스워드 확인:</td>
+				<td><input type="password" name="repass" value="<%=svo.getPass()%>" /></td>
 			</tr>
 			<tr>
-				<td align="right">�̸� :</td>
+				<td align="right">이름 :</td>
 				<td><%=svo.getName()%></td>
 			</tr>
 			<tr>
-				<td align="right">��ȭ��ȣ :</td>
-				<td><input type="text" name="phone1" size="4"
-					value="<%=svo.getPhone1()%>" /> - 
+				<td align="right">전화번호 :</td>
+				<td>
+				  <input type="text" name="phone1" size="4"	value="<%=svo.getPhone1()%>" /> - 
 					<input type="text" name="phone2" size="5" value="<%=svo.getPhone2()%>" /> - 
-					<input type="text" name="phone3" size="5" value="<%=svo.getPhone3()%>" /></td>
+					<input type="text" name="phone3" size="5" value="<%=svo.getPhone3()%>" />
+				</td>
 			</tr>
 			<tr>
-				<td align="right">�̸��� :</td>
+				<td align="right">이메일 :</td>
 				<td><input type="text" name="email" value="<%=svo.getEmail()%>" /></td>
 			</tr>
 			<tr>
-				<td align="right">������ȣ :</td>
+				<td align="right">우편번호 :</td>
 				<td><input type="text" name="zipcode"
-					value="<%=svo.getZipcode()%>" /> <input type="button" value="ã��"
+					value="<%=svo.getZipcode()%>" /> <input type="button" value="찾기"
 					onClick="zipCheck()" /></td>
 			</tr>
 			<tr>
-				<td align="right">�ּ�1 :</td>
+				<td align="right">주소1 :</td>
 				<td><input type="text" name="address1" size="50"
 					value="<%=svo.getAddress1()%>" /></td>
 			</tr>
 			<tr>
-				<td align="right">�ּ�2 :</td>
+				<td align="right">주소2 :</td>
 				<td><input type="text" name="address2" size="30"
 					value="<%=svo.getAddress2()%>" /></td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><input type="button"
-					value="��������" onClick="updateCheck()" />&nbsp;&nbsp; <input
-					type="button" value="���"
-					onClick="javascript:window.location='login.jsp'" /></td>
+				<td colspan="2" align="center">
+					<input type="button" value="정보수정" onClick="updateCheck()" />&nbsp;&nbsp; 
+					<input type="button" value="취소" 	onClick="javascript:window.location='login.jsp'" /></td>
 			</tr>
 		</table>
 	</form>
+	</main>
 </body>
 </html>

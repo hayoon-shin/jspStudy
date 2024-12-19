@@ -187,7 +187,7 @@ public final class ConnectionPool {
 
 	}
 
-	//ConnectionPool 만들어지 Connection free ArrayList에 반납하고, 아니면 close 처리한다.
+	//ConnectionPool 만들어진 Connection free ArrayList에 반납하고, 아니면 close 처리한다.
 	public synchronized void releaseConnection(Connection con) {
 		boolean flag = false;
 		if (used.contains(con) == true) {
