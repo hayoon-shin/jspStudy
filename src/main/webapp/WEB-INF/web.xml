@@ -17,7 +17,8 @@
     <welcome-file>default.html</welcome-file>
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
-  </welcome-file-list>
+    <welcome-file>home/mainPage.jsp</welcome-file>
+</welcome-file-list>
   <servlet>
     <description></description>
     <display-name>myFirstServlet</display-name>
@@ -68,4 +69,13 @@
     <servlet-name>visitList</servlet-name>
     <url-pattern>/visitList.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>boardListServlet</servlet-name>
+    <servlet-class>co.kh.dev.home.controller.board.BoardListServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+    <servlet-name>boardListServlet</servlet-name>
+    <url-pattern>/boardListServlet.do</url-pattern>
+	</servlet-mapping>
+
 </web-app>
