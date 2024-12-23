@@ -1,0 +1,168 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+	color: inherit;
+	text-decoration: inherit;
+}
+
+input[type="submit"]:hover, 
+input[type="button"]:hover, 
+button:hover {
+	cursor: pointer;
+}
+button {
+	padding: 5px 10px;
+	background-color: rgb(114, 114, 114);
+	border-radius: 3px;
+	border: none;
+	color: white;
+}
+
+footer article{
+  margin: 20px 20% 20px 20%;
+  font-size: 13px;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+header{
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+}
+
+.loginSection{
+	width: 500px;
+	background-color: rgba(0,0,0,0.05);
+	padding: 30px;
+	
+}
+
+.loginSection ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+}
+
+input[type="checkbox"] {
+  /* 기본 체크박스 숨기기 */
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgb(143, 143, 143);
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #4caf50; /* 체크 시 배경색 */
+  border-color: #4caf50;
+}
+
+input[type="checkbox"]:checked::after {
+  /* 체크된 상태의 표시 */
+  content: "✓";
+  color: white;
+  font-size: 16px;
+  position: absolute;
+  top: -2px;
+  left: 4px;
+}
+/* 로그인 정보 입력중 상태유지 버튼 */
+.maint {
+  text-align: start;
+  color: rgb(143, 143, 143);
+  margin-bottom: 15px;
+}
+.maint label {
+  position: relative;
+  bottom: 18px;
+  font-size: 14px;
+}
+/* 로그인 정보 입력부분 */
+article.loginInput {
+  position: relative;
+  bottom: 10px;
+  width: 508px;
+  height: 276px;
+  justify-self: center;
+  padding: -5px;
+  padding: 24px;
+  margin-top: 20px;
+}
+article.loginInput ul {
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgb(225, 227, 229);
+  border-radius: 12px;
+  border-radius: 12px;
+  line-height: 60px;
+  margin-bottom: 15px;
+}
+article.loginInput ul li:nth-child(1) {
+  height: 60px;
+  width: 458px;
+}
+article.loginInput ul li:nth-child(2) {
+  height: 59px;
+  width: 458px;
+  border-top: 1px solid rgb(225, 227, 229);
+}
+article.loginInput ul li input {
+  text-align: start;
+  border: none;
+  height: 50px;
+  width: 450px;
+  font-size: 16px;
+  color: rgb(158, 158, 158);
+}
+/* 로그인 정보 로그인 버튼 */
+article.loginInput button {
+  width: 458px;
+  height: 50px;
+  border: none;
+  background-color: rgb(9, 170, 92);
+  color: white;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: bold;
+}
+/* 로그인창 하단부 회원가입 네비게이션 바 loginNav */
+.loginNav {
+  margin-bottom: 50px;
+}
+.loginNav ul li {
+  font-size: 13px;
+  color: rgb(158, 158, 158);
+  margin-right: 10px;
+  padding-right: 10px;
+  border-right: 1px solid rgb(178, 178, 178);
+}
+.loginNav ul li:nth-last-child(1) {
+  border-right: none;
+}
+
+.afterLoginPage {
+  width: 458px;
+  height: 50px;
+  border: none;
+  background-color: rgb(9, 170, 92);
+  color: white;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 10px
+}
+
+.dispNone{
+    display: none;
+    margin-top: 10px;
+}

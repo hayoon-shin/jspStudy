@@ -1,0 +1,46 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<header>
+        <div class="logo_set">
+            <a href="#"><i class="fa-brands fa-stack-overflow"></i><span style="line-height: 90px; padding-left: 20px;">stack overflow</span></a>
+        </div>
+        <ul class="dropdown_list">
+            <li><a href="/join/join/register.jsp" class="dropbtn">회원가입</a>
+                <div class="dropdown-content">
+                    <a href="#">menu1</a>
+                    <a href="#">menu2</a>
+                    <a href="#">menu3</a>
+                </div></li>
+            <li><a href="/join/join/view/writeForm.jsp" class="dropbtn">게시판</a>
+                <div class="dropdown-content">
+                    <a href="#">menu1</a>
+                    <a href="#">menu2</a>
+                    <a href="#">menu3</a>
+                </div></li>
+            <li><a href="#" class="dropbtn">menu</a>
+                <div class="dropdown-content">
+                    <a href="#">menu1</a>
+                    <a href="#">menu2</a>
+                    <a href="#">menu3</a>
+                </div></li>
+            <li><a href="#" class="dropbtn">menu</a>
+                <div class="dropdown-content">
+                    <a href="#">menu1</a>
+                    <a href="#">menu2</a>
+                    <a href="#">menu3</a>
+                </div></li>
+        </ul>
+        <div class="icon_set">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+    </header>
+</body>
+</html>

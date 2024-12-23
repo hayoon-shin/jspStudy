@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+/* 게시글 작성 페이지 스타일 */
+.boardWritePage {
+    width: 60%;
+    margin: 50px auto;
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.boardWritePage h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.boardForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.boardForm label {
+    font-weight: bold;
+    color: #555;
+}
+
+.boardForm input[type="text"], 
+.boardForm textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+}
+
+.boardForm textarea {
+    height: 600px;
+}
+
+.formActions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.formActions .submitBtn, 
+.formActions .cancelBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.formActions .cancelBtn {
+    background: #dc3545;
+}
+
+.formActions button:hover {
+    opacity: 0.8;
+}

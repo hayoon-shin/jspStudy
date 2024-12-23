@@ -1,0 +1,64 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="register.css">
+    <script src="register.js"></script>
+    <script src="https://kit.fontawesome.com/70bcde4f7a.js" crossorigin="anonymous"></script>
+</head>
+<body onload="carousel();" >
+    <header>
+        <div class="logo_set">
+            <a href="#"><i class="fa-brands fa-stack-overflow"></i><span style="line-height: 90px; padding-left: 20px;">stack overflow</span></a>
+        </div>
+        <ul class="dropdown_list">
+            <li><a href="/jspStudy/join/view/writeForm.jsp" class="dropbtn">게시판</a>
+                <div class="dropdown-content">
+                    <a href="#">menu1</a>
+                    <a href="#">menu2</a>
+                    <a href="#">menu3</a>
+                </div></li>
+            <li><a href="#" class="dropbtn">menu</a>
+                <div class="dropdown-content">
+                    <a href="#">menu1</a>
+                    <a href="#">menu2</a>
+                    <a href="#">menu3</a>
+                </div></li>
+            <li><a href="#" class="dropbtn">menu</a>
+                <div class="dropdown-content">
+                    <a href="#">menu1</a>
+                    <a href="#">menu2</a>
+                    <a href="#">menu3</a>
+                </div></li>
+            <li><a href="#" class="dropbtn">menu</a>
+                <div class="dropdown-content">
+                    <a href="#">menu1</a>
+                    <a href="#">menu2</a>
+                    <a href="#">menu3</a>
+                </div></li>
+        </ul>
+        <div class="icon_set">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+    </header>
+    
+    <div class="slideshow">
+        <div class="slideshow_slides">
+            <a href="#"><img src="slide-1.jpg" alt=""></a>
+            <a href="#"><img src="slide-2.jpg" alt=""></a>
+            <a href="#"><img src="slide-3.jpg" alt=""></a>
+            <a href="#"><img src="slide-4.jpg" alt=""></a>
+        </div>
+        <div class="slideshow_nav">
+            <a href="#" class="prev"><i class="fa-solid fa-circle-chevron-left"></i></a>
+            <a href="#" class="next"><i class="fa-solid fa-circle-chevron-right"></i></a>
+        </div>
+        <div class="slideshow_indicator">
+            <a href="#" class="active"><i class="fa-solid fa-circle-dot"></i></a>
+            <a href="#"><i class="fa-solid fa-circle-dot"></i></a>
+            <a href="#"><i class="fa-solid fa-circle-dot"></i></a>
+            <a href="#"><i class="fa-solid fa-circle-dot"></i></a>
+        </div>
+    </div>

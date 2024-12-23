@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+/* 마이페이지 전체 컨테이너 */
+.myPageContainer {
+  width: 80%;
+  margin: 0 auto; /* 중앙 정렬 */
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+/* 마이페이지 제목 */
+.myPageContainer h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* 마이페이지 메뉴 */
+.myPageMenu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+/* 메뉴 항목 */
+.menuItem {
+  width: 180px;
+  height: 180px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  text-align: center;
+}
+
+.menuItem i {
+  font-size: 36px;
+  color: #09aa5c;
+  margin-bottom: 10px;
+}
+
+.menuItem a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.menuItem:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.myPageMenu .menuItem:hover{
+	cursor: pointer;
+}

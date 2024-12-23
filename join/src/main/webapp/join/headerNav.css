@@ -1,0 +1,71 @@
+@charset "UTF-8";
+* {
+    box-sizing: border-box;
+    text-decoration: none;
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+/* HTML, Body 기본 설정 */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+header {
+    background-color: #000;
+    width: 1920px;
+    height: 100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #fff;
+}
+i, a{
+    color: white;
+}
+.logo_set {
+    font-size: 50px;
+    padding-left: 25px;
+}
+.dropdown_list {
+    width: 700px;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size:24px;
+    position: relative;
+}
+ul > li:hover > a {
+    background-color: orange;
+}
+div.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: orange;
+    min-width: 100px;
+    z-index: 1;
+    box-shadow: 0px 8px 6px -6px #666;
+}
+div.dropdown-content a {
+    display:block;
+    padding: 16px 16px;
+}
+div.dropdown-content a:hover {
+    background-color:black; 
+}
+.dropdown_list:hover .dropdown-content {
+    display: block;
+}
+.icon_set {
+    font-size: 28px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-right: 25px;
+} 
+/* header 끝 */
