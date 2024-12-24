@@ -339,10 +339,7 @@ public class BoardTwoDAO {
 	        int count = 0; 
 
 	        try {
-	        	
-	        	if (vo.getPass() == null || vo.getPass().trim().isEmpty()) {
-	                throw new IllegalArgumentException("비밀번호가 null이거나 비어 있습니다.");
-	            }
+	        	vo.setPass(vo.getPass().trim());
 	        	System.out.println("Deleting record: num = " + vo.getNum() + " pass = "+vo.getPass());
 	            pstmt = con.prepareStatement(DELETE_SQL);
 	            pstmt.setInt(1, vo.getNum());

@@ -15,11 +15,25 @@ String pageNum = request.getParameter("pageNum");
 <body>
     <main>
         <h1>게시글 삭제</h1>
-        <form action="deleteProc.jsp" method="post">
-            <input type="hidden" name="num" value="${num}">
-            <label for="pwd">비밀번호:</label>
-            <input type="password" id="pwd" name="pwd" required>
-            <button type="submit">삭제</button>
+<script>
+    function validateDeleteForm() {
+        const passField = document.getElementById("pass");
+        if (!passField.value.trim()) {
+            alert("비밀번호를 입력하세요.");
+            passField.focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+<form action="deleteProc.jsp" method="post" onsubmit="return validateDeleteForm();">
+    		<input type="hidden" name="num" value="<%= num %>">
+    		<input type="hidden" name="pageNum" value="<%= pageNum %>">
+
+    		<label for="pass">비밀번호:</label>
+    		<input type="password" id="pass" name="pass" required>
+    
+    		<button type="submit">삭제</button>
         </form>
         <button onclick="location.href='list.jsp'">취소</button>
     </main>

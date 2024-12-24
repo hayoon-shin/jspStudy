@@ -15,6 +15,7 @@ String pageNum = request.getParameter("pageNum");
 <body>
     <main>
         <h1>게시글 삭제</h1>
+        
 <script>
     function validateDeleteForm() {
         const passField = document.getElementById("pass");
@@ -26,6 +27,7 @@ String pageNum = request.getParameter("pageNum");
         return true;
     }
 </script>
+
 <form action="deleteProc.jsp" method="post" onsubmit="return validateDeleteForm();">
     		<input type="hidden" name="num" value="<%= num %>">
     		<input type="hidden" name="pageNum" value="<%= pageNum %>">

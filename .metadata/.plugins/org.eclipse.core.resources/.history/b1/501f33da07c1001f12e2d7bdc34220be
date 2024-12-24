@@ -15,18 +15,7 @@ String pageNum = request.getParameter("pageNum");
 <body>
     <main>
         <h1>게시글 삭제</h1>
-<script>
-    function validateDeleteForm() {
-        const passField = document.getElementById("pass");
-        if (!passField.value.trim()) {
-            alert("비밀번호를 입력하세요.");
-            passField.focus();
-            return false;
-        }
-        return true;
-    }
-</script>
-<form action="deleteProc.jsp" method="post" onsubmit="return validateDeleteForm();">
+        <form action="deleteProc.jsp" method="post">
     		<input type="hidden" name="num" value="<%= num %>">
     		<input type="hidden" name="pageNum" value="<%= pageNum %>">
 

@@ -26,6 +26,7 @@ String pageNum = request.getParameter("pageNum");
         return true;
     }
 </script>
+
 <form action="deleteProc.jsp" method="post" onsubmit="return validateDeleteForm();">
     		<input type="hidden" name="num" value="<%= num %>">
     		<input type="hidden" name="pageNum" value="<%= pageNum %>">

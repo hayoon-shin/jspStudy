@@ -1,41 +1,45 @@
-<%@ page import="com.kh.dev.join.model.BoardTwoDAO" %>
-<%@ page import="com.kh.dev.join.model.BoardTwoVO" %>
+<%@page import="com.kh.dev.join.model.BoardTwoDAO"%>
+<%@page import="com.kh.dev.join.model.BoardTwoVO"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%
     try {
+        // 클라이언트에서 전달된 데이터의 인코딩 설정
         request.setCharacterEncoding("utf-8");
 
-        // num 값 검증
+        // 전달받은 num 값 검증
         String numStr = request.getParameter("num");
         if (numStr == null || numStr.trim().isEmpty()) {
             throw new IllegalArgumentException("글 번호가 전달되지 않았습니다.");
         }
 
+        // num 값 변환
         int num = Integer.parseInt(numStr.trim());
         String pageNum = request.getParameter("pageNum");
-
-        // pass 값 검증
         String pass = request.getParameter("pass");
-        if (pass == null || pass.trim().isEmpty()) {
-            throw new IllegalArgumentException("비밀번호가 입력되지 않았습니다.");
-        }
 
-        // DAO 호출
+        // DAO를 통해 데이터 삭제 처리
         BoardTwoVO vo = new BoardTwoVO();
         vo.setNum(num);
-        vo.setPass(pass.trim());
+        vo.setPass(pass);
 
+        // 싱글톤 인스턴스 가져오기
         BoardTwoDAO dao = BoardTwoDAO.getInstance();
         boolean isDeleted = dao.deleteDB(vo);
 
+        // 삭제 성공 여부 확인 후 알림 및 이동 처리
         if (isDeleted) {
             out.println("<script>alert('글이 삭제되었습니다.'); location.href='list.jsp?pageNum=" + pageNum + "';</script>");
         } else {
             out.println("<script>alert('비밀번호가 올바르지 않거나 삭제할 수 없습니다.'); history.back();</script>");
         }
+    } catch (NumberFormatException e) {
+        // num 값이 숫자가 아닌 경우
+        out.println("<script>alert('글 번호가 올바르지 않습니다.'); history.back();</script>");
     } catch (IllegalArgumentException e) {
+        // num 값이 누락된 경우
         out.println("<script>alert('" + e.getMessage() + "'); history.back();</script>");
     } catch (Exception e) {
+        // 기타 예외 처리
         e.printStackTrace();
         out.println("<script>alert('오류가 발생했습니다. 관리자에게 문의하세요.'); history.back();</script>");
     }

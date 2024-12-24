@@ -53,8 +53,8 @@ try {
         <div class="button-group">
             <input type="button" value="글수정"
                    onclick="document.location.href='updateForm.jsp?num=<%=_num%>&pageNum=<%=pageNum%>'">
-			<input type="button" value="글삭제"
-       			   onclick="document.location.href='deleteProc.jsp?num=<%= num %>&pageNum=<%= pageNum %>'">
+            <input type="button" value="글삭제"
+                   onclick="document.location.href='deleteForm.jsp?num=<%=_num%>&pageNum=<%=pageNum%>'">
             <input type="button" value="답글쓰기"
                    onclick="document.location.href='writeForm.jsp?num=<%=num%>&ref=<%=ref%>&step=<%=step%>&depth=<%=depth%>'">
             <input type="button" value="목록으로"
