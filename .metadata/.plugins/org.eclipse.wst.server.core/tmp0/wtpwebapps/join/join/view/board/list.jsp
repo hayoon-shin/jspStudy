@@ -39,8 +39,10 @@ number = count - (currentPage - 1) * pageSize; // 전체 갯수 100 1페이지 (
 <head>
 <title>게시판</title>
 <link href="style.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../../headerNav.css">
 </head>
 <body bgcolor="<%=bodyback_c%>">
+<%@ include file="/join/headerNav.jsp"%>
 	<main>
 		<b>글목록(전체 글:<%=count%>)
 		</b>

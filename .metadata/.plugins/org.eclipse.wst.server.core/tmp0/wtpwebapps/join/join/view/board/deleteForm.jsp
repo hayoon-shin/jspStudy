@@ -4,15 +4,18 @@
 request.setCharacterEncoding("UTF-8");
 int num = Integer.parseInt(request.getParameter("num"));
 String pageNum = request.getParameter("pageNum");
+
 %>
 <html>
 <head>
 <title>게시판</title>
 <link href="style.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../../headerNav.css">
 <script language="javascript"
 	src="script.js?timestamp=<%=System.currentTimeMillis()%>"></script>
 </head>
 <body>
+<%@ include file="/join/headerNav.jsp"%>
     <main>
         <h1>게시글 삭제</h1>
 <script>
@@ -35,7 +38,7 @@ String pageNum = request.getParameter("pageNum");
     
     		<button type="submit">삭제</button>
         </form>
-        <button onclick="location.href='list.jsp'">취소</button>
+        <button onclick="history.back()">취소</button>
     </main>
 </body>
 </html>

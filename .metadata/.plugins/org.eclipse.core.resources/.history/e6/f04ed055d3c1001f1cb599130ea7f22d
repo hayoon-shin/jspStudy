@@ -1,0 +1,50 @@
+<%@page import="com.kh.dev.join.model.BoardTwoDAO"%>
+<%@page import="com.kh.dev.join.model.BoardTwoVO"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%
+    String writer = (String) session.getAttribute("writer");
+    String subject = (String) session.getAttribute("subject");
+    String content = (String) session.getAttribute("content");
+    String email = (String) session.getAttribute("email");
+
+    // 데이터가 없는 경우 경고 및 이전 페이지로 이동
+    if (writer == null || subject == null || content == null || email == null) {
+        out.println("<script>alert('수정할 데이터를 찾을 수 없습니다.'); history.back();</script>");
+        return;
+    }
+%>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>글 수정</title>
+</head>
+<body>
+    <main>
+        <h1>글 수정</h1>
+        <form action="updateProc.jsp" method="post">
+            <label for="writer">작성자:</label>
+            <input type="text" id="writer" name="writer" value="<%= writer %>" required>
+
+            <label for="subject">제목:</label>
+            <input type="text" id="subject" name="subject" value="<%= subject %>" required>
+
+            <label for="content">내용:</label>
+            <textarea id="content" name="content" required><%= content %></textarea>
+
+            <label for="email">이메일:</label>
+            <input type="email" id="email" name="email" value="<%= email %>" required>
+
+            <label for="pass">비밀번호:</label>
+            <input type="password" id="pass" name="pass" required>
+
+            <div class="button-group">
+                <button type="submit">수정</button>
+                <button type="button" onclick="history.back();">취소</button>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

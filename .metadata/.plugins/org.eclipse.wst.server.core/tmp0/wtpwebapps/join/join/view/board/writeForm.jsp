@@ -16,11 +16,13 @@
 <head>
 <title>My Board</title>
 <link href="style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="../../headerNav.css">
 <script language="javascript"
 	src="script.js?timestamp=<%= System.currentTimeMillis() %>"></script>
 </head>
 <!--// 나중에 새글 답별글 구분하는 코드 추가 <1> -->
 <body bgcolor="<%=bodyback_c%>">
+<%@ include file="/join/headerNav.jsp"%>
 	<main>
 		<b>글쓰기</b>
 	</main>

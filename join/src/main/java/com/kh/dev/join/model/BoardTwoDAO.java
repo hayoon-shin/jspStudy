@@ -283,7 +283,7 @@ public class BoardTwoDAO {
 			return bvo;
 		}	
 
-		public int updateDB(BoardTwoVO vo) {
+		public boolean updateDB(BoardTwoVO vo) {
 			//1: 성공, 2. 패스워드문제, 3 수정문제 
 			ConnectionPool cp = ConnectionPool.getInstance();
 			Connection con = cp.dbCon();
@@ -292,6 +292,7 @@ public class BoardTwoDAO {
 			int passCheckCount = 0;
 			int count = 0;
 			int returnValue = 1;
+			boolean result = false;
 			
 			//패스워드가 맞는지 점검필요
 			try {
@@ -315,20 +316,16 @@ public class BoardTwoDAO {
 					pstmt.setString(3, vo.getSubject());
 					pstmt.setString(4, vo.getContent());
 					pstmt.setInt(5, vo.getNum());
-					count = pstmt.executeUpdate();
-					if(count == 0) 
-						returnValue = 3;
-					else
-						returnValue = 1; 
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} finally {
-					cp.dbClose(con, pstmt);
-				}
-			}else {
-				returnValue = 2;
+					int rowsAffected = pstmt.executeUpdate(); // 영향을 받은 행 수 반환
+			        result = rowsAffected > 0; // 1개 이상의 행이 수정되었으면 true
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			    } finally {
+			        cp.dbClose(con, pstmt);
+			    }
+			    return result;
 			}
-			return returnValue; 
+			return result;
 		}
 		
 		public boolean deleteDB(BoardTwoVO vo) {

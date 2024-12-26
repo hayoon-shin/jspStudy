@@ -1,54 +1,57 @@
 <%@page import="com.kh.dev.join.model.BoardTwoDAO"%>
 <%@page import="com.kh.dev.join.model.BoardTwoVO"%>
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ include file="color.jsp"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%
-request.setCharacterEncoding("UTF-8");
-int num = Integer.parseInt(request.getParameter("num"));
-String pageNum = request.getParameter("pageNum");
-BoardTwoVO vo = new BoardTwoVO(); 
-vo.setNum(num); 
+    // 전달받은 글 번호와 페이지 번호
+    String num = request.getParameter("num");
+    String pageNum = request.getParameter("pageNum");
+    String writer = request.getParameter("writer");
+    String subject = request.getParameter("subject");
+    String content = request.getParameter("content");
+    String email = request.getParameter("email");
+
+    // 글 번호가 없으면 오류 처리
+    if (num == null || num.trim().isEmpty()) {
+        out.println("<script>alert('글 번호가 전달되지 않았습니다.'); history.back();</script>");
+        return;
+    }
 %>
-<%
-try {
-	BoardTwoDAO bdao = BoardTwoDAO.getInstance();
-	BoardTwoVO article = bdao.selectBoardOneDB(vo); 
-%>
-<html>
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-<title>게시판</title>
-<link href="style.css" rel="stylesheet" type="text/css">
-<script language="javascript"
-	src="script.js?timestamp=<%= System.currentTimeMillis() %>"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>글 수정</title>
 </head>
-<body bgcolor="<%=bodyback_c%>">
-	<main>
-		<b>글수정</b> <br>
-		<form method="post" name="writeform" action="updateProc.jsp?pageNum=<%=pageNum%>"
-			onsubmit="return writeSave()">
-            <input type="hidden" name="num" value="${num}">
+<body>
+    <main>
+        <h1>글 수정</h1>
+        <form action="updateProc.jsp" method="post">
+            <!-- 글 번호와 페이지 번호 전달 -->
+            <input type="hidden" name="num" value="<%= num %>">
+            <input type="hidden" name="pageNum" value="<%= pageNum %>">
 
-            <label for="writer">작성자</label>
-            <input type="text" id="writer" name="writer" value="${content.writer}" readonly>
+            <label for="writer">작성자:</label>
+            <input type="text" id="writer" name="writer" value="<%= writer != null ? writer : "" %>" required>
 
-            <label for="subject">제목</label>
-            <input type="text" id="subject" name="subject" value="${content.subject}" required>
+            <label for="subject">제목:</label>
+            <input type="text" id="subject" name="subject" value="<%= subject != null ? subject : "" %>" required>
 
-            <label for="content">내용</label>
-            <textarea id="content" name="content" rows="10" required>${content.content}</textarea>
+            <label for="content">내용:</label>
+            <textarea id="content" name="content" required><%= content != null ? content : "" %></textarea>
 
-            <label for="pass">비밀번호</label>
+            <label for="email">이메일:</label>
+            <input type="email" id="email" name="email" value="<%= email != null ? email : "" %>" required>
+
+            <label for="pass">비밀번호:</label>
             <input type="password" id="pass" name="pass" required>
 
             <div class="button-group">
                 <button type="submit">수정</button>
-                <button type="button" onclick="location.href='content.jsp?num=${num}'">취소</button>
+                <button type="button" onclick="history.back();">취소</button>
             </div>
         </form>
     </main>
-	<%
-	} catch (Exception e) {
-	}
-	%>
 </body>
 </html>

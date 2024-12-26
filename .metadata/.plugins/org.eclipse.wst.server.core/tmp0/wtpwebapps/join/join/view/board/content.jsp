@@ -29,9 +29,11 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../headerNav.css">
     <title>게시글 상세 보기</title>
 </head>
 <body>
+<%@ include file="/join/headerNav.jsp"%>
     <main>
         <h1>게시글 상세 보기</h1>
         <table>
@@ -54,7 +56,7 @@ try {
             <input type="button" value="글수정"
                    onclick="document.location.href='updateForm.jsp?num=<%=_num%>&pageNum=<%=pageNum%>'">
 			<input type="button" value="글삭제"
-       			   onclick="document.location.href='deleteProc.jsp?num=<%= num %>&pageNum=<%= pageNum %>'">
+       			   onclick="document.location.href='deleteForm.jsp?num=<%= num %>&pageNum=<%= pageNum %>'">
             <input type="button" value="답글쓰기"
                    onclick="document.location.href='writeForm.jsp?num=<%=num%>&ref=<%=ref%>&step=<%=step%>&depth=<%=depth%>'">
             <input type="button" value="목록으로"

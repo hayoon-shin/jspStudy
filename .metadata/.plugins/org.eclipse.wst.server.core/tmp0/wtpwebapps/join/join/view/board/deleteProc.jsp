@@ -5,13 +5,7 @@
     try {
         request.setCharacterEncoding("utf-8");
 
-        // num 값 검증
-        String numStr = request.getParameter("num");
-        if (numStr == null || numStr.trim().isEmpty()) {
-            throw new IllegalArgumentException("글 번호가 전달되지 않았습니다.");
-        }
-
-        int num = Integer.parseInt(numStr.trim());
+        int num = Integer.parseInt(request.getParameter("num"));
         String pageNum = request.getParameter("pageNum");
 
         // pass 값 검증
