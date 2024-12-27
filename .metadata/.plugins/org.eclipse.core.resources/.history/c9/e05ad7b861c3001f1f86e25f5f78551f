@@ -5,31 +5,15 @@
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%
-    // 안전한 값 가져오기와 기본값 설정
-    // 보여줄 리스트 해당
-    Integer currentPageObj = (Integer) request.getAttribute("currentPage");
-    int currentPage = currentPageObj != null ? currentPageObj : 1; // 기본값: 1
-
-    Integer startRowObj = (Integer) request.getAttribute("startRow");
-    int startRow = startRowObj != null ? startRowObj : 0; // 기본값: 0
-
-    Integer endRowObj = (Integer) request.getAttribute("endRow");
-    int endRow = endRowObj != null ? endRowObj : 0; // 기본값: 0
-
-    Integer countObj = (Integer) request.getAttribute("count");
-    int count = countObj != null ? countObj : 0; // 기본값: 0
-
-    Integer pageSizeObj = (Integer) request.getAttribute("pageSize");
-    int pageSize = pageSizeObj != null ? pageSizeObj : 10; // 기본값: 10
-
-    Integer numberObj = (Integer) request.getAttribute("number");
-    int number = numberObj != null ? numberObj : 0; // 기본값: 0
-
-    // 리스트 기본값 처리
-    List<BoardTwoVO> articleList = (List<BoardTwoVO>) request.getAttribute("articleList");
-
-    // 날짜 포맷
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//보여줄 리스트 해당
+int currentPage = (Integer)request.getAttribute("currentPage");
+int startRow = (Integer)request.getAttribute("startRow");
+int endRow= (Integer)request.getAttribute("endRow");
+int count = (Integer)request.getAttribute("count");
+int pageSize= (Integer)request.getAttribute("pageSize");
+int number = (Integer)request.getAttribute("number");
+List<BoardTwoVO> articleList =(List<BoardTwoVO>)request.getAttribute("articleList");
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 %>
 <!DOCTYPE html>
 <html>
@@ -67,7 +51,7 @@
       <td align="center"  width="100" >IP</td>    
     </tr>
 <%  
-    for ( BoardTwoVO article : articleList) {
+    for ( BoardVO article : articleList) {
 %>
    <tr height="30">
     <td align="center"  width="50" > <%= number--%></td>

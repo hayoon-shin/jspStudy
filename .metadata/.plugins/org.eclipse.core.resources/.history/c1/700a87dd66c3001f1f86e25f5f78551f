@@ -33,7 +33,6 @@ public class BoardTwoDAO {
 			}
 			return instance;
 		}
-		
 
 		private final String SELECT_SQL = "select * from boardtwo order by num desc";
 		private final String SELECT_START_END_SQL = "select * from (select rownum rnum, num, writer,email, subject, pass, regdate, readcount, ref, step, depth, content, ip "

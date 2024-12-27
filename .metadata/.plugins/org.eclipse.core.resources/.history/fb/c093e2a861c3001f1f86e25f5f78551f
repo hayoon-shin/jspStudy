@@ -4,32 +4,17 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ include file="view/color.jsp"%>
 <%
-    // 안전한 값 가져오기와 기본값 설정
-    // 보여줄 리스트 해당
-    Integer currentPageObj = (Integer) request.getAttribute("currentPage");
-    int currentPage = currentPageObj != null ? currentPageObj : 1; // 기본값: 1
-
-    Integer startRowObj = (Integer) request.getAttribute("startRow");
-    int startRow = startRowObj != null ? startRowObj : 0; // 기본값: 0
-
-    Integer endRowObj = (Integer) request.getAttribute("endRow");
-    int endRow = endRowObj != null ? endRowObj : 0; // 기본값: 0
-
-    Integer countObj = (Integer) request.getAttribute("count");
-    int count = countObj != null ? countObj : 0; // 기본값: 0
-
-    Integer pageSizeObj = (Integer) request.getAttribute("pageSize");
-    int pageSize = pageSizeObj != null ? pageSizeObj : 10; // 기본값: 10
-
-    Integer numberObj = (Integer) request.getAttribute("number");
-    int number = numberObj != null ? numberObj : 0; // 기본값: 0
-
-    // 리스트 기본값 처리
-    List<BoardTwoVO> articleList = (List<BoardTwoVO>) request.getAttribute("articleList");
-
-    // 날짜 포맷
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//보여줄 리스트 해당
+int currentPage = (Integer)request.getAttribute("currentPage");
+int startRow = (Integer)request.getAttribute("startRow");
+int endRow= (Integer)request.getAttribute("endRow");
+int count = (Integer)request.getAttribute("count");
+int pageSize= (Integer)request.getAttribute("pageSize");
+int number = (Integer)request.getAttribute("number");
+List<BoardVO> articleList =(List<BoardVO>)request.getAttribute("articleList");
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 %>
 <!DOCTYPE html>
 <html>
@@ -37,12 +22,12 @@
 <title>게시판</title>
 <link href="style.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body bgcolor="<%=bodyback_c%>">
 <main>
 	<b>글목록(전체 글:<%=count%>)</b>
 <table width="700">
   <tr>
-    <td align="right">
+    <td align="right" bgcolor="<%=value_c%>">
     <a href="writeForm.do">글쓰기</a>
     </td>
   </tr>
@@ -58,7 +43,7 @@
 </table>
 <%  } else {    %>
 <table border="1" width="700" cellpadding="0" cellspacing="0" align="center"> 
-    <tr height="30"> 
+    <tr height="30" bgcolor="<%=value_c%>"> 
       <td align="center"  width="50"  >번 호</td> 
       <td align="center"  width="250" >제   목</td> 
       <td align="center"  width="100" >작성자</td>
@@ -67,7 +52,7 @@
       <td align="center"  width="100" >IP</td>    
     </tr>
 <%  
-    for ( BoardTwoVO article : articleList) {
+    for ( BoardVO article : articleList) {
 %>
    <tr height="30">
     <td align="center"  width="50" > <%= number--%></td>
