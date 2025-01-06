@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+/* 팝업 창 스타일 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    display: flex; /* Flexbox 사용 */
+    justify-content: center; /* 수평 가운데 */
+    align-items: center; /* 수직 가운데 */
+    overflow: hidden; /* 스크롤바 제거 */
+}
+
+/* 로그인 폼 스타일 예시 */
+.loginForm {
+    width: max-content; /* 내용 크기에 맞게 조정 */
+    padding: 20px;
+    border: 1px solid #ccc;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}

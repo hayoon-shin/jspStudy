@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+.carouselSection{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 10px;
+}
+ .carousel {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: nowrap;
+  z-index: 2;
+}
+div#slide_show {
+  width:1600px;
+  height: 1000px;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: nowrap;
+  border-radius: 10px;
+}
+.carousel img {
+  position: absolute;
+  width: 100%;
+  height: 1000px;
+  border-radius: 20px;
+}
+
+div#indicator {
+  z-index: 10;
+}
+#navgateleft {
+  z-index: 10;
+  position: absolute;
+  font-size: 40px;
+  bottom: 50%;
+  transform: translate(-50%, 50%);
+  left: 10%;
+  color: rgba(255, 255, 255, 0.651);
+}
+#navgateright {
+  z-index: 10;
+  position: absolute;
+  bottom: 50%;
+  transform: translate(-50%, 50%);
+  left: 90%;
+  font-size: 40px;
+  color: rgba(255, 255, 255, 0.651);
+}
+#navgateleft:hover,
+#navgateright:hover {
+  color: rgba(255, 255, 255, 0.911);
+  cursor: pointer;
+}
+
+#indicator i {
+  font-size: 20px;
+  margin-right: 5px;
+}
+#indicator i:hover {
+  color: rgba(255, 255, 255, 0.911);
+  cursor: pointer;
+}
+#indicator {
+  position: absolute;
+  bottom: 20px;
+  color: rgba(255, 255, 255, 0.651);
+  transform: translate(-50%);
+  left: 50%;
+}
+.active {
+  color: orange;
+}

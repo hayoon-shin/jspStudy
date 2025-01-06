@@ -24,8 +24,7 @@
 <body bgcolor="<%=bodyback_c%>">
 <%@ include file="/join/headerNav.jsp"%>
 	<main>
-		<b>글쓰기</b>
-	</main>
+		<h1>글쓰기</h1>
 	<br></br>
 	<form method="post" name="writeForm" action="writeProc.jsp"
 		onsubmit="return writeSave()">
@@ -60,7 +59,7 @@
 
             <div class="button-group">
                 <button type="submit">작성</button>
-                <button type="button" onclick="location.href='list.jsp'">취소</button>
+                <button type="button" onclick="location.href='list.jsp'">목록</button>
             </div>
         </form>
     </main>

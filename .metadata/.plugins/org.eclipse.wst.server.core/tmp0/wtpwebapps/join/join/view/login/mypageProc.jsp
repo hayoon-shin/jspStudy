@@ -20,7 +20,7 @@
     user.setPhone3(phone3);
     user.setGender(gender);
 
-    UsersDAO dao = new UsersDAO();
+    UsersDAO dao = UsersDAO.getInstance();
     boolean isUpdated = dao.updateUser(user);
 
     if (isUpdated) {

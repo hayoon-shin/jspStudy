@@ -22,9 +22,8 @@
             <input type="password" id="pwd" name="pwd" placeholder="비밀번호를 입력하세요" required>
 
             <button type="submit">로그인</button>
-
             <div class="links">
-                <a href="register.jsp">회원가입</a> |
+                <a href="../../view/join/register.jsp">회원가입</a> |
                 <a href="forgotPassword.jsp">비밀번호 찾기</a>
             </div>
         </form>

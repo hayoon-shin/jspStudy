@@ -8,6 +8,15 @@ import java.sql.SQLException;
 import com.kh.dev.common.ConnectionPool;
 
 public class UsersDAO {
+	
+	private static UsersDAO instance = new UsersDAO();
+
+    private UsersDAO() {}
+
+    public static UsersDAO getInstance() {
+        return instance;
+    }
+
     private final String INSERT_SQL = "insert into users values(?,?,?,?,?,?,?,?,?,?,?,?)";
     private final String SELECT_SQL = "SELECT * FROM users WHERE id = ? AND pwd = ?";
     private final String UPDATE_SQL = "UPDATE users SET name = ?, email = ?, phone1 = ?, phone2 = ?, phone3 = ?, gender = ? WHERE id = ?";

@@ -2,11 +2,11 @@
 <%@ page import="com.kh.dev.join.model.UsersVO, com.kh.dev.join.model.UsersDAO" %>
 <%
     // 사용자 입력값 가져오기
-    String id = request.getParameter("id");
-    String pwd = request.getParameter("pwd");
+    String userId = request.getParameter("id");
+    String password = request.getParameter("pwd");
 
-    UsersDAO dao = new UsersDAO();
-    UsersVO user = dao.authenticateUser(id, pwd);
+    UsersDAO dao = UsersDAO.getInstance();
+    UsersVO user = dao.authenticateUser(userId, password);
 	
     if (user != null) {
         // 로그인 성공

@@ -1,0 +1,359 @@
+package com.kh.dev.join.model;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import com.kh.dev.common.ConnectionPool;
+import com.kh.dev.common.DBUtility;
+
+public class NoticeDAO {
+	
+
+		// 싱글톤1
+		private static NoticeDAO instance;
+
+		// 싱글톤2
+		private NoticeDAO() {
+		}
+
+		// 싱글톤3
+		public static NoticeDAO getInstance() {
+			if (instance == null) {
+				synchronized (NoticeDAO.class) {
+					instance = new NoticeDAO();
+				}
+			}
+			return instance;
+		}
+		
+
+		private final String SELECT_SQL = "select * from NOTICE order by num desc";
+		private final String SELECT_START_END_SQL = "select * from (select rownum rnum, num, writer,email, subject, pass, regdate, readcount, ref, step, depth, content, ip "
+				+ "from (select * from NOTICE order by ref desc, step asc)) where rnum>=? and rnum<=?";
+
+		private final String SELECT_COUNT_SQL = "SELECT COUNT(*) AS COUNT FROM NOTICE";
+		private final String SELECT_MAX_NUM_SQL = "select max(num) as NUM from NOTICE";
+		private final String SELECT_ONE_SQL = "select * from NOTICE where num = ?";
+		private final String SELECT_PASS_ID_CHECK_SQL = "select count(*) count from NOTICE where num = ? and pass = ?";
+		
+		private final String SELECT_BY_ID_SQL = "SELECT count(*) as count FROM NOTICE WHERE ID = ?";
+		private final String SELECT_LOGIN_SQL = "SELECT PASS FROM NOTICE WHERE ID = ?";
+		private final String INSERT_SQL = "insert into NOTICE(num, writer, email, subject, pass,"
+				+ "regdate, ref, step, depth, content, ip)	values(NOTICE_seq.nextval,?,?,?,?,SYSDATE,?,?,?,?,?)";
+		private final String DELETE_SQL = "DELETE FROM NOTICE WHERE NUM = ? and PASS = ?";
+		private final String UPDATE_SQL = "update NOTICE set writer= ?,email= ?,subject= ? ,content= ? where num = ?";
+		private final String UPDATE_STEP_SQL = "update NOTICE set step=step+1 where ref= ? and step > ?";
+		private final String UPDATE_READCOUNT_SQL = "update NOTICE set readcount = readcount+1 where num = ?";
+		private final String SELECT_ZIP_SQL = "select * from zipcode where dong like ?";
+
+		public Boolean insertDB(NoticeVO vo) {
+			ConnectionPool cp = ConnectionPool.getInstance();
+			Connection con = cp.dbCon();
+			PreparedStatement pstmt = null;
+
+			// 현재 보드속에 가장최고값 + 1, 없으면 1
+			ResultSet rs = null;
+			int number = 0;
+			int step = 0;
+			int depth = 0;
+			int ref = 1;
+			int count = 0;
+
+			try {
+				pstmt = con.prepareStatement(SELECT_MAX_NUM_SQL);
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					number = rs.getInt("NUM") + 1;
+				} else {
+					number = 1;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			// getNum() 0 이면 새글, 0 이면 답변글이다.
+			try {
+				if (vo.getNum() != 0) {// 답변글일경우
+					pstmt = con.prepareStatement(UPDATE_STEP_SQL);
+					pstmt.setInt(1, vo.getRef());
+					pstmt.setInt(2, vo.getStep());
+					pstmt.executeUpdate();
+					ref = vo.getRef();
+					step = vo.getStep() + 1;
+					depth = vo.getDepth() + 1;
+				} else {// 새 글일 경우
+					ref = number; // 가장최고값 + 1
+					step = 0;
+					depth = 0;
+				} 
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			//게시판 글 등록하기
+			try {
+				pstmt = con.prepareStatement(INSERT_SQL);
+				pstmt.setString(1, vo.getWriter());
+				pstmt.setString(2, vo.getEmail());
+				pstmt.setString(3, vo.getSubject());
+				pstmt.setString(4, vo.getPass());
+				pstmt.setInt(5, ref);
+				pstmt.setInt(6, step);
+				pstmt.setInt(7, depth);
+				pstmt.setString(8, vo.getContent());
+				pstmt.setString(9, vo.getIp());
+				count = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				cp.dbClose(con, pstmt);
+			}
+			return (count > 0) ? true : false;
+		}
+		
+		public int selectCountDB() {
+			ConnectionPool cp = ConnectionPool.getInstance();
+			Connection con = cp.dbCon();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int count = 0; 
+			try {
+				pstmt = con.prepareStatement(SELECT_COUNT_SQL);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					count = rs.getInt("COUNT");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				cp.dbClose(con, pstmt, rs);
+			}
+			return count;
+		}	
+		
+		public ArrayList<NoticeVO> selectDB() {
+			ConnectionPool cp = ConnectionPool.getInstance();
+			Connection con = cp.dbCon();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			ArrayList<NoticeVO> boardList = new ArrayList<NoticeVO>();
+			try {
+				pstmt = con.prepareStatement(SELECT_SQL);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					int num 		= rs.getInt("num");
+					String writer 	= rs.getString("writer");
+					String email 	= rs.getString("email");
+					String subject 	= rs.getString("subject");
+					String pass 	= rs.getString("pass");
+					Timestamp regdate = rs.getTimestamp("regdate");
+					int readcount 	= rs.getInt("readcount");
+					int ref 		= rs.getInt("ref");
+					int step 		= rs.getInt("step");
+					int depth 		= rs.getInt("depth");
+					String content 	= rs.getString("content");
+					String ip 		= rs.getString("ip");
+					NoticeVO vo 		= new NoticeVO(num, writer, email, subject, pass, readcount, ref, step, depth, regdate, content, ip); 
+					boardList.add(vo);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				cp.dbClose(con, pstmt, rs);
+			}
+			return boardList;
+		}
+		
+		public ArrayList<NoticeVO> selectStartEndDB(int start, int end) {
+			ConnectionPool cp = ConnectionPool.getInstance();
+			Connection con = cp.dbCon();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			ArrayList<NoticeVO> boardList = new ArrayList<NoticeVO>(end-start+1); // arrayList 갯수를 미리 정해주는 것
+			try {
+				pstmt = con.prepareStatement(SELECT_START_END_SQL);
+				pstmt.setInt(1, start);
+				pstmt.setInt(2, end);			
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					int num 		= rs.getInt("num");
+					String writer 	= rs.getString("writer");
+					String email 	= rs.getString("email");
+					String subject 	= rs.getString("subject");
+					String pass 	= rs.getString("pass");
+					Timestamp regdate = rs.getTimestamp("regdate");
+					int readcount 	= rs.getInt("readcount");
+					int ref 		= rs.getInt("ref");
+					int step 		= rs.getInt("step");
+					int depth 		= rs.getInt("depth");
+					String content 	= rs.getString("content");
+					String ip 		= rs.getString("ip");
+					NoticeVO vo 		= new NoticeVO(num, writer, email, subject, pass, readcount, ref, step, depth, regdate, content, ip); 
+					boardList.add(vo);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				cp.dbClose(con, pstmt, rs);
+			}
+			return boardList;
+		}
+		
+		public NoticeVO selectBoardDB(NoticeVO vo) {
+			ConnectionPool cp = ConnectionPool.getInstance();
+			Connection con = cp.dbCon();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			NoticeVO bvo = null; 
+			int count = 0; 
+			try {
+				//조회수 증가
+				pstmt = con.prepareStatement(UPDATE_READCOUNT_SQL);
+				pstmt.setInt(1, vo.getNum());
+				pstmt.executeUpdate();
+				
+				//num 내용가져오기
+				pstmt = con.prepareStatement(SELECT_ONE_SQL);
+				pstmt.setInt(1, vo.getNum());
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					int num 		= rs.getInt("num");
+					String writer 	= rs.getString("writer");
+					String email 	= rs.getString("email");
+					String subject 	= rs.getString("subject");
+					String pass 	= rs.getString("pass");
+					Timestamp regdate = rs.getTimestamp("regdate");
+					int readcount 	= rs.getInt("readcount");
+					int ref 		= rs.getInt("ref");
+					int step 		= rs.getInt("step");
+					int depth 		= rs.getInt("depth");
+					String content 	= rs.getString("content");
+					String ip 		= rs.getString("ip");
+					bvo 		= new NoticeVO(num, writer, email, subject, pass, readcount, ref, step, depth, regdate, content, ip);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				cp.dbClose(con, pstmt, rs);
+			}
+			System.out.println("bvo = "+bvo.toString());
+			return bvo;
+		}	
+		
+		public NoticeVO selectBoardOneDB(NoticeVO vo) {
+			ConnectionPool cp = ConnectionPool.getInstance();
+			Connection con = cp.dbCon();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			NoticeVO bvo = null; 
+			int count = 0; 
+			try {
+				pstmt = con.prepareStatement(SELECT_ONE_SQL);
+				pstmt.setInt(1, vo.getNum());
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					int num 		= rs.getInt("num");
+					String writer 	= rs.getString("writer");
+					String email 	= rs.getString("email");
+					String subject 	= rs.getString("subject");
+					String pass 	= rs.getString("pass");
+					Timestamp regdate = rs.getTimestamp("regdate");
+					int readcount 	= rs.getInt("readcount");
+					int ref 		= rs.getInt("ref");
+					int step 		= rs.getInt("step");
+					int depth 		= rs.getInt("depth");
+					String content 	= rs.getString("content");
+					String ip 		= rs.getString("ip");
+					bvo 		= new NoticeVO(num, writer, email, subject, pass, readcount, ref, step, depth, regdate, content, ip);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				cp.dbClose(con, pstmt, rs);
+			}
+			System.out.println("bvo = "+bvo.toString());
+			return bvo;
+		}	
+
+		public boolean updateDB(NoticeVO vo) {
+			//1: 성공, 2. 패스워드문제, 3 수정문제 
+			ConnectionPool cp = ConnectionPool.getInstance();
+			Connection con = cp.dbCon();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null; 
+			int passCheckCount = 0;
+			int count = 0;
+			int returnValue = 1;
+			boolean result = false;
+			
+			//패스워드가 맞는지 점검필요
+			try {
+				pstmt = con.prepareStatement(SELECT_PASS_ID_CHECK_SQL);
+				pstmt.setInt(1, vo.getNum());
+				pstmt.setString(2, vo.getPass());
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					passCheckCount = rs.getInt("COUNT");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if(passCheckCount != 0) {
+				try {
+					pstmt = con.prepareStatement(UPDATE_SQL);
+					pstmt.setString(1, vo.getWriter());
+					pstmt.setString(2, vo.getEmail());
+					pstmt.setString(3, vo.getSubject());
+					pstmt.setString(4, vo.getContent());
+					pstmt.setInt(5, vo.getNum());
+					int rowsAffected = pstmt.executeUpdate(); // 영향을 받은 행 수 반환
+			        result = rowsAffected > 0; // 1개 이상의 행이 수정되었으면 true
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			    } finally {
+			        cp.dbClose(con, pstmt);
+			    }
+			    return result;
+			}
+			return result;
+		}
+		
+		public boolean deleteDB(NoticeVO vo) {
+	        ConnectionPool cp = ConnectionPool.getInstance();
+	        Connection con = cp.dbCon();
+	        PreparedStatement pstmt = null;
+	        ResultSet rs = null;
+	        int count = 0; 
+
+	        try {
+	        	
+	        	if (vo.getPass() == null || vo.getPass().trim().isEmpty()) {
+	                throw new IllegalArgumentException("비밀번호가 null이거나 비어 있습니다.");
+	            }
+	        	System.out.println("Deleting record: num = " + vo.getNum() + " pass = "+vo.getPass());
+	            pstmt = con.prepareStatement(DELETE_SQL);
+	            pstmt.setInt(1, vo.getNum());
+	            pstmt.setString(2, vo.getPass());
+	            count = pstmt.executeUpdate();
+	            
+	            System.out.println("Delete result: " + count);
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } finally {
+	            cp.dbClose(con, pstmt);
+	        }
+
+	        return (count != 0) ? true : false;
+	    }
+}
+

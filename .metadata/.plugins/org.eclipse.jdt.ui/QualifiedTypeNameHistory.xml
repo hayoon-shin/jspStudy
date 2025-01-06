@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="com.kh.dev.join.model.FileUploadVO"/>
+    <fullyQualifiedTypeName name="com.kh.dev.join.model.FileUploadDAO"/>
+</qualifiedTypeNameHistroy>

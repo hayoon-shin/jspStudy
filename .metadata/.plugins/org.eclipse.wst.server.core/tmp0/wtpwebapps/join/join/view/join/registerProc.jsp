@@ -2,7 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <% 
  request.setCharacterEncoding("utf-8");
- UsersDAO udao = new UsersDAO(); 
+ UsersDAO udao = UsersDAO.getInstance(); 
 %>
 <jsp:useBean id="uvo" class="com.kh.dev.join.model.UsersVO" />
 <jsp:setProperty name="uvo" property="*" />

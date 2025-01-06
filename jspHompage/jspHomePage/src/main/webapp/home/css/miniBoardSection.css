@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+
+/* 게시판 미리보기 스타일 */
+.boardArticle {  border-radius: 8px; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin: 20px auto; width: 90%;
+}
+
+.boardArticle h3 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.boardArticle table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+.boardArticle th, .boardArticle td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.boardArticle th {
+  background: rgb(9, 170, 92);
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.boardArticle td {
+  font-size: 16px;
+  color: #333;
+}
+
+.moreButton {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background: rgb(9, 170, 92);
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+
+.moreButton:hover {
+  background: rgb(7, 130, 70);
+}
+
+

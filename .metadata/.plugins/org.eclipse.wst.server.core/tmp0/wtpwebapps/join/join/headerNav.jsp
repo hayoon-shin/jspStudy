@@ -20,7 +20,7 @@
                 </div></li>
             <li><a href="/join/join/view/board/writeForm.jsp" class="dropbtn">게시판</a>
                 <div class="dropdown-content">
-                    <a href="#">menu1</a>
+                    <a href="/join/join/view/notice/list.jsp">공지사항</a>
                     <a href="#">menu2</a>
                     <a href="#">menu3</a>
                 </div></li>

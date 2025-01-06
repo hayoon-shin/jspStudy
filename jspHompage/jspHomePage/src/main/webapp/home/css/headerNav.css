@@ -1,0 +1,141 @@
+@charset "UTF-8";
+
+/* 헤더 스타일 */
+.headerNav {
+  width: 100%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 30px; /* 패딩 조정으로 내부 간격 설정 */
+  position: relative;
+  z-index: 10;
+  margin-bottom: 25px; /* 상단 영역 내부 마진 */
+}
+
+/* 메인 메뉴 스타일 */
+.mainMenu {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  margin: 0;
+  padding: 0;
+  gap: 50px;
+}
+
+.mainMenu > li {
+  padding: 15px 25px;
+  font-size: 18px;
+  font-weight: bold;
+  color: rgb(9, 170, 92);
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.mainMenu > li:hover {
+  background-color: white;
+  color: rgb(9, 170, 92);
+  border-radius: 5px;
+}
+
+/* 로그인/로그아웃 버튼 */
+.Button {
+  background: white;
+  color: rgb(9, 170, 92);
+  border: 2px solid rgb(9, 170, 92);
+  border-radius: 8px;
+  padding: 12px 25px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.Button:hover {
+  background: rgb(9, 170, 92);
+  color: white;
+  border: 2px solid rgb(9, 170, 92);
+}
+
+/* 하위 메뉴 컨테이너 */
+.subMenuContainer {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  padding: 15px 0;
+  overflow: hidden;
+  height: 0;
+  transition: height 0.3s ease, opacity 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 8px 8px;
+}
+
+/* 하위 메뉴 스타일 */
+.subMenu {
+  list-style: none;
+  display: none;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  
+}
+
+.subMenu.active {
+  display: flex;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.subMenu li {
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  color: rgb(9, 170, 92);
+  transition: color 0.3s;
+}
+
+.subMenu li a {
+  text-decoration: none;
+  color: rgb(9, 170, 92);
+  transition: color 0.3s;
+}
+
+
+.subMenu li:hover {
+  background: rgb(9, 170, 92);
+  border-radius: 5px;
+  color: white;
+}
+
+/* 아이콘 스타일 (무난한 폰트어썸 아이콘 적용) */
+.headerNav i {
+  font-size: 40px; /* 크기 조정 */
+  color: rgb(9, 170, 92);
+  margin-left: 30px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.headerNav i:hover {
+  transform: scale(1.1);
+}
+
+/* 이중 표시 문제 방지 */
+.headerNav::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  z-index: -1;
+}
+

@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+/* 상품 작성 페이지 스타일 */
+.productInsertPage {
+    width: 60%;
+    margin: 50px auto;
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-width: 1200px;
+}
+
+.productInsertPage h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.productForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.productForm label {
+    font-weight: bold;
+    color: #555;
+}
+
+.productForm input[type="text"],
+.productForm input[type="number"],
+.productForm input[type="file"],
+.productForm textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+}
+
+.productForm input[type="file"] {
+    padding: 5px;
+}
+
+.productForm textarea {
+    height: 200px;
+}
+
+/* 버튼 스타일 */
+.formActions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.formActions .submitBtn,
+.formActions .cancelBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.formActions .cancelBtn {
+    background: #dc3545;
+}
+
+.formActions button:hover {
+    opacity: 0.8;
+}
+.productForm select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.productForm select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
