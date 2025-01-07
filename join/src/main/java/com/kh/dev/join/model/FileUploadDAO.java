@@ -70,17 +70,25 @@ public class FileUploadDAO {
     
     
     // 게시글 작성
-    public void insertFileUpload(FileUploadVO vo) throws SQLException {
-        String query = "INSERT INTO FILEUPLOAD (TITLE, AUTHOR, CONTENT, PASSWORD) VALUES (?, ?, ?, ?)";
-        try (Connection conn = pool.dbCon(); 
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+    public int insertFileUpload(FileUploadVO vo) throws SQLException {
+        int boardId = 0;
+        String query = "INSERT INTO BOARD (TITLE, AUTHOR, CONTENT, PASSWORD) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, vo.getTitle());
             pstmt.setString(2, vo.getAuthor());
             pstmt.setString(3, vo.getContent());
             pstmt.setString(4, vo.getPassword());
             pstmt.executeUpdate();
+
+            try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    boardId = rs.getInt(1);
+                }
+            }
         }
+        return boardId;
     }
+
 
     // 게시글 조회
     public FileUploadVO getFileUploadById(int id) throws SQLException {

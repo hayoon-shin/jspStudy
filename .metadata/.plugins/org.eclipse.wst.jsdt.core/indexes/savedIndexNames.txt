@@ -2,8 +2,6 @@ INDEX VERSION 1.4+C:\Users\ssh33\eclipse-workspace\jspStudy\.metadata\.plugins\o
 3182702784.index
 822261824.index
 1613912167.index
-1388652319.index
-1388652319.index
 3165210331.index
 853856796.index
 684436089.index

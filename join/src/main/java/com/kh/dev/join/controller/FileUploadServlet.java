@@ -1,6 +1,9 @@
 package com.kh.dev.join.controller;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.*;
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
@@ -36,8 +39,12 @@ public class FileUploadServlet extends HttpServlet {
         String content = null;
         String password = null;
         String fileName = null;
+        long fileSize = 0;
+
+        int boardId = 0;
 
         try {
+            // 텍스트 필드 데이터 처리
             for (Part part : request.getParts()) {
                 String fieldName = part.getName();
 
@@ -53,19 +60,13 @@ public class FileUploadServlet extends HttpServlet {
                     fileName = extractFileName(part);
                     if (fileName != null && !fileName.isEmpty()) {
                         String filePath = uploadPath + File.separator + fileName;
+                        fileSize = part.getSize();
                         part.write(filePath); // 파일 저장
                     }
                 }
             }
 
-            // 디버깅 출력
-            out.println("Title: " + title + "<br>");
-            out.println("Author: " + author + "<br>");
-            out.println("Content: " + content + "<br>");
-            out.println("Password: " + password + "<br>");
-            out.println("FileName: " + fileName + "<br>");
-
-            // DB 저장 로직 (FileUploadDAO 사용)
+            // 게시글 데이터 저장
             if (title != null && author != null && content != null && password != null) {
                 FileUploadVO vo = new FileUploadVO();
                 vo.setTitle(title);
@@ -74,12 +75,26 @@ public class FileUploadServlet extends HttpServlet {
                 vo.setPassword(password);
 
                 FileUploadDAO dao = new FileUploadDAO();
-                dao.insertFileUpload(vo);
-
-                response.sendRedirect(request.getContextPath() + "/join/view/fileupload/fileuploadList.jsp"); // 목록 페이지로 리다이렉트
-            } else {
-                out.println("모든 필드를 입력하세요.");
+                boardId = dao.insertFileUpload(vo); // 게시글 삽입 후 생성된 ID 반환
             }
+
+            // 파일 정보 저장
+            if (boardId > 0 && fileName != null) {
+                try (Connection conn = FileUploadDAO.getConnection()) {
+                    String query = "INSERT INTO FILES (BOARD_ID, FILE_NAME, FILE_PATH, FILE_SIZE) VALUES (?, ?, ?, ?)";
+                    try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                        pstmt.setInt(1, boardId); // 게시글 ID
+                        pstmt.setString(2, fileName); // 파일 이름
+                        pstmt.setString(3, uploadPath + File.separator + fileName); // 파일 경로
+                        pstmt.setLong(4, fileSize); // 파일 크기
+                        pstmt.executeUpdate();
+                    }
+                }
+            }
+
+            // 성공적으로 처리되면 목록 페이지로 리다이렉트
+            response.sendRedirect(request.getContextPath() + "/join/view/fileupload/fileuploadList.jsp");
+
         } catch (Exception e) {
             out.println("오류 발생: " + e.getMessage());
         }
@@ -96,6 +111,3 @@ public class FileUploadServlet extends HttpServlet {
         return null;
     }
 }
-
-
-
