@@ -79,18 +79,16 @@ public class FileUploadServlet extends HttpServlet {
             }
 
             // 파일 정보 저장
-            if (boardId > 0 && fileName != null) {
-                try (Connection conn = FileUploadDAO.getConnection()) {
-                    String query = "INSERT INTO FILES (BOARD_ID, FILE_NAME, FILE_PATH, FILE_SIZE) VALUES (?, ?, ?, ?)";
-                    try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-                        pstmt.setInt(1, boardId); // 게시글 ID
-                        pstmt.setString(2, fileName); // 파일 이름
-                        pstmt.setString(3, uploadPath + File.separator + fileName); // 파일 경로
-                        pstmt.setLong(4, fileSize); // 파일 크기
-                        pstmt.executeUpdate();
-                    }
-                }
+            FileUploadDAO dao = new FileUploadDAO();
+            try {
+                dao.saveFileInfo(boardId, fileName, uploadPath + fileName, fileSize);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new ServletException("파일 정보 저장 중 오류 발생: " + e.getMessage());
+            } finally {
+                dao.close();
             }
+
 
             // 성공적으로 처리되면 목록 페이지로 리다이렉트
             response.sendRedirect(request.getContextPath() + "/join/view/fileupload/fileuploadList.jsp");
