@@ -78,7 +78,8 @@ public class FileUploadDAO {
     }
     
     public void saveFileInfo(int boardId, String fileName, String filePath, long fileSize) throws SQLException {
-        String query = "INSERT INTO FILES (ID, BOARD_ID, FILE_NAME, FILE_PATH, FILE_SIZE) VALUES (FILES_SEQ.NEXTVAL, ?, ?, ?, ?)";
+    	validateFileInputs(boardId, fileName, filePath, fileSize); // 입력 데이터 검증
+    	String query = "INSERT INTO FILES (ID, BOARD_ID, FILE_NAME, FILE_PATH, FILE_SIZE) VALUES (FILES_SEQ.NEXTVAL, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setInt(1, boardId); // BOARD_ID
             pstmt.setString(2, fileName); // FILE_NAME
@@ -106,23 +107,28 @@ public class FileUploadDAO {
     
     // 게시글 작성
     public int insertFileUpload(FileUploadVO vo) throws SQLException {
+        validateFileUploadInputs(vo.getTitle(), vo.getAuthor(), vo.getContent(), vo.getPassword()); // 데이터 검증
+
         int boardId = 0;
-        String query = "INSERT INTO FILEUPLOAD (ID, TITLE, AUTHOR, CONTENT, PASSWORD) VALUES (FILEUPLOAD_SEQ.NEXTVAL, ?, ?, ?, ?)";
+        String query = "INSERT INTO FILEUPLOAD (ID, TITLE, AUTHOR, CONTENT, PASSWORD, CREATED_DATE) " +
+                       "VALUES (FILEUPLOAD_SEQ.NEXTVAL, ?, ?, ?, ?, SYSDATE)";
         try (PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, vo.getTitle());
-            pstmt.setString(2, vo.getAuthor());
-            pstmt.setString(3, vo.getContent());
-            pstmt.setString(4, vo.getPassword());
+            pstmt.setString(1, vo.getTitle());   // TITLE
+            pstmt.setString(2, vo.getAuthor()); // AUTHOR
+            pstmt.setString(3, vo.getContent()); // CONTENT
+            pstmt.setString(4, vo.getPassword()); // PASSWORD
             pstmt.executeUpdate();
 
+            // 자동 생성된 ID 가져오기
             try (ResultSet rs = pstmt.getGeneratedKeys()) {
                 if (rs.next()) {
-                    boardId = rs.getInt(1);
+                    boardId = rs.getInt(1); // 생성된 ID 반환
                 }
             }
         }
         return boardId;
     }
+
 
 
     // 게시글 조회
@@ -165,6 +171,38 @@ public class FileUploadDAO {
             pstmt.setString(2, vo.getContent());
             pstmt.setInt(3, vo.getId());
             pstmt.executeUpdate();
+        }
+    }
+    
+ // 입력 데이터 검증 메서드 (게시글용)
+    private void validateFileUploadInputs(String title, String author, String content, String password) {
+        if (title == null || title.trim().isEmpty()) {
+            throw new IllegalArgumentException("제목이 비어 있습니다.");
+        }
+        if (author == null || author.trim().isEmpty()) {
+            throw new IllegalArgumentException("작성자가 비어 있습니다.");
+        }
+        if (content == null || content.trim().isEmpty()) {
+            throw new IllegalArgumentException("내용이 비어 있습니다.");
+        }
+        if (password == null || password.trim().isEmpty()) {
+            throw new IllegalArgumentException("비밀번호가 비어 있습니다.");
+        }
+    }
+
+    // 입력 데이터 검증 메서드 (파일용)
+    private void validateFileInputs(int boardId, String fileName, String filePath, long fileSize) {
+        if (boardId <= 0) {
+            throw new IllegalArgumentException("유효하지 않은 게시글 ID입니다.");
+        }
+        if (fileName == null || fileName.trim().isEmpty()) {
+            throw new IllegalArgumentException("파일 이름이 비어 있습니다.");
+        }
+        if (filePath == null || filePath.trim().isEmpty()) {
+            throw new IllegalArgumentException("파일 경로가 비어 있습니다.");
+        }
+        if (fileSize <= 0) {
+            throw new IllegalArgumentException("파일 크기가 유효하지 않습니다.");
         }
     }
 

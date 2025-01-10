@@ -4,4 +4,7 @@
     <fullyQualifiedTypeName name="com.kh.dev.join.model.FileUploadVO"/>
     <fullyQualifiedTypeName name="com.kh.dev.common.ConnectionPool"/>
     <fullyQualifiedTypeName name="com.kh.dev.join.model.FileUploadDAO"/>
+    <fullyQualifiedTypeName name="javax.servlet.annotation.WebServlet"/>
+    <fullyQualifiedTypeName name="javax.servlet.annotation.MultipartConfig"/>
+    <fullyQualifiedTypeName name="java.lang.Override"/>
 </qualifiedTypeNameHistroy>
