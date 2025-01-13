@@ -19,8 +19,12 @@
 <html>
 <head>
     <title>게시글 수정</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../headerNav.css">
+    
 </head>
 <body>
+<%@ include file="/join/headerNav.jsp"%>
     <h1>게시글 수정</h1>
     <form action="fileuploadEditProc.jsp" method="post">
         <input type="hidden" name="id" value="<%= vo.getId() %>">

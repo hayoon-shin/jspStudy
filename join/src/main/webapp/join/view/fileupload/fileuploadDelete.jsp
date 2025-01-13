@@ -4,8 +4,11 @@
 <html>
 <head>
     <title>게시글 삭제</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../headerNav.css">
 </head>
 <body>
+<%@ include file="/join/headerNav.jsp"%>
     <h1>게시글 삭제</h1>
     <form action="fileuploadDeleteProc.jsp" method="post">
         <input type="hidden" name="id" value="<%= request.getParameter("id") %>">

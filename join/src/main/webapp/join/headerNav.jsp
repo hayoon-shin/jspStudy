@@ -16,15 +16,13 @@
                 <div class="dropdown-content">
                     <a href="/join/join/view/login/login.jsp">로그인</a>
                     <a href="/join/join/view/login/mypage.jsp">마이페이지</a>
-                    <a href="#">menu3</a>
                 </div></li>
             <li><a href="/join/join/view/board/writeForm.jsp" class="dropbtn">게시판</a>
                 <div class="dropdown-content">
                     <a href="/join/join/view/notice/list.jsp">공지사항</a>
-                    <a href="#">menu2</a>
-                    <a href="#">menu3</a>
+                    <a href="/join/join/view/fileupload/fileuploadList.jsp">자료실</a>
                 </div></li>
-            <li><a href="#" class="dropbtn">menu</a>
+            <li><a href="/join/join/view/cart/productList.jsp" class="dropbtn">서비스 안내</a>
                 <div class="dropdown-content">
                     <a href="#">menu1</a>
                     <a href="#">menu2</a>

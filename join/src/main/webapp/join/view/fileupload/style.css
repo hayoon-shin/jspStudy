@@ -1,0 +1,140 @@
+@charset "UTF-8";
+
+/* 전체 배경 및 텍스트 설정 */
+body {
+    font-size: 14px;
+    color: #ffffff; /* 흰색 텍스트 */
+    background-color: #121212; /* 다크 배경 */
+    line-height: 1.6;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* 제목 스타일 */
+h1 {
+    font-size: 36px;
+    color: #ffffff; /* 글씨를 흰색으로 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    background: none; /* 배경 상자 제거 */
+    border: none; /* 테두리 제거 */
+    margin: 20px 0; /* 위아래 여백 추가 */
+    padding: 0; /* 내부 여백 제거 */
+}
+
+/* 메인 컨테이너 스타일 */
+main {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 테이블 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border: 1px solid #333333;
+}
+
+th, td {
+    border: 1px solid #ffffff;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #333333;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+td {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+tr:nth-child(even) {
+    background-color: #292929;
+}
+
+tr:hover {
+    background-color: #333333;
+}
+
+/* 링크 스타일 */
+a {
+    color: #66CCFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #ffffff;
+}
+
+/* 버튼 스타일 */
+button {
+    font-size: 14px;
+    color: #121212;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+button:hover{
+    background-color: #f5f5f5;
+}
+
+/* 페이지네이션 컨테이너 */
+.pagination {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.pagination a {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+/* 폼 스타일 */
+form {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    main {
+        width: 95%;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    button, .pagination a {
+        font-size: 12px;
+        padding: 8px 15px;
+    }
+}

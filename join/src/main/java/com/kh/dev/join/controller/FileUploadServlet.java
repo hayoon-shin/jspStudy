@@ -11,7 +11,7 @@ import com.kh.dev.join.model.FileUploadDAO;
 import com.kh.dev.join.model.FileUploadVO;
 
 // URL 매핑
-@WebServlet("/join/controller/fileuploadWriteProc.do")
+@WebServlet("/fileuploadWriteProc.do")
 @MultipartConfig(
     fileSizeThreshold = 1024 * 1024 * 2, // 2MB
     maxFileSize = 1024 * 1024 * 10,      // 10MB

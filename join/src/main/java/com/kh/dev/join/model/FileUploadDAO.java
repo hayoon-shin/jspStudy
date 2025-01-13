@@ -34,29 +34,65 @@ public class FileUploadDAO {
             e.printStackTrace();
         }
     }
+    
+    // 전체 게시글 수를 반환하는 메서드를 추가 
+
+    public int getTotalCount() throws SQLException {
+        String query = "SELECT COUNT(*) AS COUNT FROM FILEUPLOAD";
+        try (Connection conn = ConnectionPool.getInstance().dbCon();
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt("COUNT");
+            }
+        }
+        return 0;
+    }
+
 
     // 게시글 목록 조회 (페이징)
     public List<FileUploadVO> getFileUploadList(int page, int pageSize) throws SQLException {
-        String query = "SELECT * FROM (SELECT ROWNUM AS RN, B.* FROM (SELECT * FROM FILEUPLOAD ORDER BY ID DESC) B) WHERE RN BETWEEN ? AND ?";
         List<FileUploadVO> list = new ArrayList<>();
-        try (Connection conn = ConnectionPool.getInstance().dbCon(); 
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, (page - 1) * pageSize + 1);
-            pstmt.setInt(2, page * pageSize);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    FileUploadVO vo = new FileUploadVO();
-                    vo.setId(rs.getInt("ID"));
-                    vo.setTitle(rs.getString("TITLE"));
-                    vo.setAuthor(rs.getString("AUTHOR"));
-                    vo.setContent(rs.getString("CONTENT"));
-                    vo.setCreatedDate(rs.getTimestamp("CREATED_DATE"));
-                    list.add(vo);
-                }
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionPool.getInstance().dbCon();
+            String query = "SELECT * FROM ( " +
+                           "    SELECT ROWNUM AS RNUM, T.* " +
+                           "    FROM (SELECT * FROM FILEUPLOAD ORDER BY CREATED_DATE DESC) T " +
+                           "    WHERE ROWNUM <= ? " +
+                           ") WHERE RNUM > ?";
+            pstmt = conn.prepareStatement(query);
+
+            int endRow = page * pageSize;
+            int startRow = (page - 1) * pageSize;
+
+            pstmt.setInt(1, endRow);
+            pstmt.setInt(2, startRow);
+
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                FileUploadVO vo = new FileUploadVO();
+                vo.setId(rs.getInt("ID"));
+                vo.setTitle(rs.getString("TITLE"));
+                vo.setAuthor(rs.getString("AUTHOR"));
+                vo.setContent(rs.getString("CONTENT"));
+                vo.setPassword(rs.getString("PASSWORD"));
+                vo.setCreatedDate(rs.getDate("CREATED_DATE"));
+                list.add(vo);
             }
+        } finally {
+            // 자원 반환
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (conn != null) ConnectionPool.getInstance().releaseConnection(conn);
         }
+
         return list;
     }
+
     
     public List<String> getFileNamesByBoardId(int boardId) throws SQLException {
         List<String> fileNames = new ArrayList<>();
@@ -107,27 +143,35 @@ public class FileUploadDAO {
     
     // 게시글 작성
     public int insertFileUpload(FileUploadVO vo) throws SQLException {
-        validateFileUploadInputs(vo.getTitle(), vo.getAuthor(), vo.getContent(), vo.getPassword()); // 데이터 검증
+        validateFileUploadInputs(vo.getTitle(), vo.getAuthor(), vo.getContent(), vo.getPassword());
 
         int boardId = 0;
-        String query = "INSERT INTO FILEUPLOAD (ID, TITLE, AUTHOR, CONTENT, PASSWORD, CREATED_DATE) " +
-                       "VALUES (FILEUPLOAD_SEQ.NEXTVAL, ?, ?, ?, ?, SYSDATE)";
-        try (PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, vo.getTitle());   // TITLE
-            pstmt.setString(2, vo.getAuthor()); // AUTHOR
-            pstmt.setString(3, vo.getContent()); // CONTENT
-            pstmt.setString(4, vo.getPassword()); // PASSWORD
-            pstmt.executeUpdate();
 
-            // 자동 생성된 ID 가져오기
-            try (ResultSet rs = pstmt.getGeneratedKeys()) {
+        // 데이터 삽입
+        String insertQuery = "INSERT INTO FILEUPLOAD (ID, TITLE, AUTHOR, CONTENT, PASSWORD, CREATED_DATE) " +
+                             "VALUES (FILEUPLOAD_SEQ.NEXTVAL, ?, ?, ?, ?, SYSDATE)";
+        String selectQuery = "SELECT FILEUPLOAD_SEQ.CURRVAL AS ID FROM DUAL";
+
+        try (PreparedStatement insertStmt = conn.prepareStatement(insertQuery);
+             PreparedStatement selectStmt = conn.prepareStatement(selectQuery)) {
+
+            insertStmt.setString(1, vo.getTitle());
+            insertStmt.setString(2, vo.getAuthor());
+            insertStmt.setString(3, vo.getContent());
+            insertStmt.setString(4, vo.getPassword());
+            insertStmt.executeUpdate();
+
+            // 생성된 ID 가져오기
+            try (ResultSet rs = selectStmt.executeQuery()) {
                 if (rs.next()) {
-                    boardId = rs.getInt(1); // 생성된 ID 반환
+                    boardId = rs.getInt("ID");
+                    System.out.println("Generated Key using CURRVAL: " + boardId);
                 }
             }
         }
         return boardId;
     }
+
 
 
 

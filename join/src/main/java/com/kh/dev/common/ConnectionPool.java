@@ -24,7 +24,7 @@ public final class ConnectionPool {
 	private ArrayList<Connection> free;
 	private ArrayList<Connection> used; // 사용중인 커넥션을 저장하는 변수
 	private int initialCons = 10; // 최초로 초기 커넥션수
-	private int maxCons = 20; // 최대 커넥션수
+	private int maxCons = 100; // 최대 커넥션수
 	private int numCons = 0; // 총 Connection 수
 	private String id = null;
 	private String pw = null;
@@ -91,19 +91,26 @@ public final class ConnectionPool {
 	}
 
 	public synchronized Connection dbCon() {
-		// 1. free ArrayList Connection 들어있는지 확인(현재 10개 있을거로 추정)
-		Connection con = null;
-		if (free.isEmpty()) {
-			// 최종 max 20 개를 다시 만든다.
-			while (numCons < maxCons) {
-				addConnection();
-			}
-		}
-		con = free.get(free.size() - 1);
-		free.remove(con);
-		used.add(con);
+	    System.out.println("Requesting connection. Free: " + free.size() + ", Used: " + used.size());
+	    Connection con = null;
 
-		return con;
+	    if (free.isEmpty()) {
+	        if (numCons < maxCons) {
+	            addConnection();
+	        } else {
+	            throw new RuntimeException("Maximum connection limit reached. Cannot provide connection.");
+	        }
+	    }
+
+	    try {
+	        con = free.remove(free.size() - 1);
+	        used.add(con);
+	    } catch (IndexOutOfBoundsException e) {
+	        throw new RuntimeException("No available connections in the pool.", e);
+	    }
+
+	    System.out.println("Connection provided. Free: " + free.size() + ", Used: " + used.size());
+	    return con;
 	}
 
 	public void dbClose(Connection con, ResultSet rs, Statement... stmts) {
@@ -189,22 +196,16 @@ public final class ConnectionPool {
 
 	//ConnectionPool 만들어진 Connection free ArrayList에 반납하고, 아니면 close 처리한다.
 	public synchronized void releaseConnection(Connection con) {
-		boolean flag = false;
-		if (used.contains(con) == true) {
-			used.remove(con);
-			numCons--;
-			free.add(con);
-			numCons++;
-			flag = true;
-		}
-
-		try {
-			if (flag == false) {
-				con.close();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	    if (used.contains(con)) {
+	        used.remove(con); // 사용 중 리스트에서 제거
+	        free.add(con); // free 리스트에 추가
+	    } else {
+	        try {
+	            con.close(); // 리스트에 포함되지 않은 커넥션은 닫기
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 	
 	//현재 ConnectionPool 있는 connection 모두 제거한다.
