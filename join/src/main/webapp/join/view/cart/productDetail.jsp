@@ -2,19 +2,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="../../headerNav.css">
     <title>상품 상세 페이지</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f8f8;
+            background-color: #121212;
         }
 
         .container {
             width: 90%;
             max-width: 1200px;
-            margin: 20px auto;
+            margin: 40px auto;
             display: flex;
             background: #fff;
             border: 1px solid #ddd;
@@ -138,6 +139,7 @@
     </style>
 </head>
 <body>
+<%@ include file="/join/headerNav.jsp"%>
     <div class="container">
         <!-- 상품 이미지 -->
         <div class="product-image">
@@ -151,26 +153,19 @@
                 <span>인기목록</span>
                 <span>MD추천</span>
             </div>
-            <p class="description">사랑스러운 겨울 스타일링~ 💛 <br>#소프트한 색감 #베스트템</p>
+            <p class="description">Web Programming</p>
             <p class="price">
-                29,500원
-                <del>49,800원</del>
-                <span style="color: #e74c3c; font-size: 14px;">41% OFF</span>
+                가격문의
+                <del>999,999원</del>
             </p>
 
             <!-- 옵션 선택 -->
             <div class="options">
                 <select>
-                    <option>- [필수] 색상을 선택해 주세요 -</option>
-                    <option>Yellow</option>
-                    <option>White</option>
-                    <option>Pink</option>
-                </select>
-                <select>
-                    <option>- [필수] 사이즈를 선택해 주세요 -</option>
-                    <option>Small</option>
-                    <option>Medium</option>
-                    <option>Large</option>
+                    <option>- [필수] 옵션을 선택해 주세요 -</option>
+                    <option>Standard</option>
+                    <option>Deluxe</option>
+                    <option>Premium</option>
                 </select>
             </div>
 
@@ -179,10 +174,77 @@
                 <button class="buy-now">바로구매</button>
                 <button>장바구니</button>
             </div>
+        </div>
+    </div>
+    <div class="container">
+        <!-- 상품 이미지 -->
+        <div class="product-image">
+            <img src="../../images/design.png" alt="디자인">
+        </div>
 
-            <!-- SNS 링크 -->
-            <div class="sns-link">
-                <a href="#">카카오톡 상담은 여기!</a>
+        <!-- 상품 정보 -->
+        <div class="product-info">
+            <h1>Design</h1>
+            <div class="tags">
+                <span>인기목록</span>
+                <span>특가할인</span>
+            </div>
+            <p class="description">Web Design</p>
+            <p class="price">
+                가격문의
+                <del>999,999원</del>
+            </p>
+
+            <!-- 옵션 선택 -->
+            <div class="options">
+                <select>
+                    <option>- [필수] 옵션을 선택해 주세요 -</option>
+                    <option>Standard</option>
+                    <option>Deluxe</option>
+                    <option>Premium</option>
+                </select>
+            </div>
+
+            <!-- 버튼 -->
+            <div class="actions">
+                <button class="buy-now">바로구매</button>
+                <button>장바구니</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <!-- 상품 이미지 -->
+        <div class="product-image">
+            <img src="../../images/photograph.png" alt="촬영">
+        </div>
+
+        <!-- 상품 정보 -->
+        <div class="product-info">
+            <h1>Photography</h1>
+            <div class="tags">
+                <span>인기목록</span>
+                <span>MD추천</span>
+            </div>
+            <p class="description">Product Photography</p>
+            <p class="price">
+                가격문의
+                <del>999,999원</del>
+            </p>
+
+            <!-- 옵션 선택 -->
+            <div class="options">
+                <select>
+                    <option>- [필수] 옵션을 선택해 주세요 -</option>
+                    <option>Standard</option>
+                    <option>Deluxe</option>
+                    <option>Premium</option>
+                </select>
+            </div>
+
+            <!-- 버튼 -->
+            <div class="actions">
+                <button class="buy-now">바로구매</button>
+                <button>장바구니</button>
             </div>
         </div>
     </div>
